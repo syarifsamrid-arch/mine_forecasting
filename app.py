@@ -15,7 +15,9 @@ st.markdown("---")
 # Fungsi untuk mengambil data dari Google Sheet secara publik
 @st.cache_data(ttl=600)
 def load_data():
-  url = "https://docs.google.com/spreadsheets/d/1WvnPCrEo3J-GoeZb0pYZAsX9D9uCqGMorQaiwbngGtg/export?format=csv&gid=0"
+  # Menggunakan format ekspor CSV standar spreadsheet
+  sheet_id = "1WvnPCrEo3J-GoeZb0pYZAsX9D9uCqGMorQaiwbngGtg"
+  url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
   df = pd.read_csv(url)
   return df
 
@@ -33,8 +35,7 @@ try:
 
   st.markdown("---")
   st.info(
-      "Aplikasi terhubung secara real-time dengan Google Sheet database"
-      " Anda."
+      "Aplikasi terhubung secara real-time dengan Google Sheet database Anda."
   )
 
 except Exception as e:
