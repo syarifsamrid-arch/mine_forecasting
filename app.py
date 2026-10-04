@@ -12,12 +12,13 @@ st.title("⛏️ Dashboard Perencanaan Produksi Tambang")
 st.markdown("---")
 
 
-# Fungsi untuk mengambil data dari Google Sheet secara publik via Gviz
+# Fungsi untuk mengambil data dari Google Sheet secara publik
 @st.cache_data(ttl=600)
 def load_data():
+  # ID Google Sheet Anda
   sheet_id = "1WvnPCrEo3J-GoeZb0pYZAsX9D9uCqGMorQaiwbngGtg"
-  sheet_name = "BEP_Loader"
-  url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
+  # Menggunakan format ekspor CSV publik langsung berdasarkan nama sheet
+  url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&sheet=BEP_Loader"
   df = pd.read_csv(url)
   return df
 
@@ -41,6 +42,6 @@ try:
 except Exception as e:
   st.error(f"Terjadi kesalahan saat memuat data: {e}")
   st.write(
-      "Pastikan tautan Google Sheet sudah diatur ke 'Siapa saja yang memiliki"
-      " link'."
+      "Pastikan Google Sheet sudah dibagikan dengan akses 'Siapa saja yang"
+      " memiliki link'."
   )
