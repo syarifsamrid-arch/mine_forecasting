@@ -12,12 +12,12 @@ st.title("⛏️ Dashboard Perencanaan Produksi Tambang")
 st.markdown("---")
 
 
-# Fungsi untuk mengambil data dari Google Sheet secara publik
+# Fungsi untuk mengambil data dari Google Sheet secara publik via Gviz
 @st.cache_data(ttl=600)
 def load_data():
-  # ID Google Sheet disimpan sebagai teks murni di dalam tanda kutip
   sheet_id = "1WvnPCrEo3J-GoeZb0pYZAsX9D9uCqGMorQaiwbngGtg"
-  url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
+  sheet_name = "BEP_Loader"
+  url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
   df = pd.read_csv(url)
   return df
 
