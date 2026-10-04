@@ -8,7 +8,7 @@ st.set_page_config(
     layout="wide",
 )
 
-st.title("⛏️ Dashboard Perencanaan Produksi Tambang")
+st.title("⛏️️ Dashboard Perencanaan Produksi Tambang")
 st.markdown("---")
 
 # ID Google Sheet Anda
@@ -41,7 +41,6 @@ daftar_sheet = [
 # Fungsi untuk mengambil data dari sheet tertentu secara dinamis
 @st.cache_data(ttl=600)
 def load_sheet_data(sheet_name):
-  # Menggunakan URL Gviz agar bisa memanggil sheet berdasarkan nama teksnya
   url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
   df = pd.read_csv(url)
   return df
@@ -49,11 +48,8 @@ def load_sheet_data(sheet_name):
 
 # Membuat navigasi pilihan sheet di bagian Sidebar (Menu Samping)
 st.sidebar.header("📂 Navigasi Database Tambang")
-selected_sheet = st.sidebar.selectbox(
-    "Pilih Modul / Sheet:", daftar_sheet, index=3
-)  # Default ke BEP_Loader
+selected_sheet = st.sidebar.selectbox("Pilih Modul / Sheet:", daftar_sheet)
 
-# Menampilkan informasi ringkas di sidebar
 st.sidebar.markdown("---")
 st.sidebar.info(
     "Aplikasi terhubung langsung dengan Google Sheet database perencanaan"
@@ -79,9 +75,12 @@ try:
   st.dataframe(df_data, use_container_width=True)
 
 except Exception as e:
-  st.error(f"Terjadi kesalahan saat memuat data: {e}")
+  st.error(f"Gagal memuat sheet '{selected_sheet}'.")
   st.warning(
-      "Pastikan penulisan nama sheet di Google Sheet sama persis dengan daftar"
-      " sistem, dan pastikan Google Sheet sudah diatur ke mode 'Siapa saja"
+      "Kemungkinan penyebab:\n1. Nama tab di Google Sheet tidak 100% sama"
+      " persis dengan sistem.\n2. Sheet tersebut masih kosong (belum ada"
+      " datanya).\n3. Pastikan izin Google Sheet sudah diatur ke 'Siapa saja"
       " yang memiliki link'."
   )
+  with st.expander("Lihat detail teknis error"):
+    st.write(e)
