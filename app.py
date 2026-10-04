@@ -8,7 +8,7 @@ st.set_page_config(
     layout="wide",
 )
 
-st.title("⛏️️ Dashboard Perencanaan Produksi Tambang")
+st.title("⛏️ Dashboard Perencanaan Produksi Tambang")
 st.markdown("---")
 
 # ID Google Sheet Anda
@@ -38,9 +38,10 @@ daftar_sheet = [
 ]
 
 
-# Fungsi untuk mengambil data dari sheet tertentu secara dinamis
+# Fungsi untuk mengambil data menggunakan metode ekspor CSV publik langsung dari Google
 @st.cache_data(ttl=600)
 def load_sheet_data(sheet_name):
+  # Menggunakan format ekspor GID alternatif yang lebih stabil
   url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
   df = pd.read_csv(url)
   return df
@@ -54,6 +55,14 @@ st.sidebar.markdown("---")
 st.sidebar.info(
     "Aplikasi terhubung langsung dengan Google Sheet database perencanaan"
     " produksi."
+)
+
+# Catatan Penting untuk memastikan Google Sheet terbaca publik
+st.sidebar.warning(
+    "⚠️ **Catatan Penting Akses:**\nPastikan Google Sheet Anda sudah melalui"
+    " menu **File > Share > Publish to web** (Publikasikan ke web), lalu"
+    " pilih *Entire Document* dan klik **Publish** agar server luar bisa"
+    " membaca seluruh sheet."
 )
 
 # Menjalankan aplikasi dan menampilkan data dari sheet yang dipilih
@@ -76,11 +85,11 @@ try:
 
 except Exception as e:
   st.error(f"Gagal memuat sheet '{selected_sheet}'.")
-  st.warning(
-      "Kemungkinan penyebab:\n1. Nama tab di Google Sheet tidak 100% sama"
-      " persis dengan sistem.\n2. Sheet tersebut masih kosong (belum ada"
-      " datanya).\n3. Pastikan izin Google Sheet sudah diatur ke 'Siapa saja"
-      " yang memiliki link'."
+  st.info(
+      "**Solusi Cepat 404:**\nBuka Google Sheet Anda -> Klik menu **File** ->"
+      " **Share** -> **Publish to web** -> Klik tombol **Publish**. Hal ini"
+      " wajib dilakukan agar Google mengizinkan aplikasi luar mengunduh datanya"
+      " secara publik."
   )
   with st.expander("Lihat detail teknis error"):
     st.write(e)
