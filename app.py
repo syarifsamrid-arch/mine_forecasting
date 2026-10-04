@@ -51,7 +51,7 @@ def load_sheet_data(sheet_name):
 st.sidebar.header("📂 Navigasi Database Tambang")
 selected_sheet = st.sidebar.selectbox(
     "Pilih Modul / Sheet:", daftar_sheet, index=3
-)  # Default ke BEP_Loader (indeks ke-3)
+)  # Default ke BEP_Loader
 
 # Menampilkan informasi ringkas di sidebar
 st.sidebar.markdown("---")
@@ -75,7 +75,7 @@ try:
     st.metric("Total Kolom", df_data.shape[1])
 
   # Menampilkan tabel data interaktif
-  st.subheader(📋 Tabel Data: {selected_sheet})
+  st.subheader(f"📋 Tabel Data: {selected_sheet}")
   st.dataframe(df_data, use_container_width=True)
 
 except Exception as e:
