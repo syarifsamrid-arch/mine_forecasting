@@ -15,9 +15,9 @@ st.markdown("---")
 # Fungsi untuk mengambil data dari Google Sheet secara publik
 @st.cache_data(ttl=600)
 def load_data():
-  # Menggunakan format ekspor CSV standar spreadsheet
+  # ID Google Sheet disimpan sebagai teks murni di dalam tanda kutip
   sheet_id = "1WvnPCrEo3J-GoeZb0pYZAsX9D9uCqGMorQaiwbngGtg"
-  url = f"https://docs.google.com/spreadsheets/d/{1WVnPCrEo3J-GoeZb0pYZAsX9D9uCqGmoRqaiwbnGGtg}/export?format=csv"
+  url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv"
   df = pd.read_csv(url)
   return df
 
